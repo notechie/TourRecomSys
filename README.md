@@ -8,4 +8,4 @@ This project implements a recommendation system for tour destinations, allowing 
 - **Customizable User Input:** Users can input their preferences (e.g., minimum rating, location, fee) to get personalized recommendations.
 
 ## Future Scope
-Collaborative Filtering: Implement collaborative filtering based on user history and ratings to enhance recommendations.
+- **Collaborative Filtering:** Implement collaborative filtering based on user history and ratings to enhance recommendations.
