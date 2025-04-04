@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Recommended Places</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.min.css"
+    />
+    <style>
+      body {
+        margin: 40px;
+      }
+      table {
+        width: 100%;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Recommended Tourist Places</h1>
+    {% for table in tables %} {{ table | safe }} {% endfor %}
+    <a href="/" class="button">Go Back</a>
+  </body>
+</html>

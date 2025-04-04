@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tourist Recommendation System</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f8f8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        text-align: center;
+      }
+      .btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+      .btn {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .btn.active {
+        background-color: #4caf50;
+        color: white;
+      }
+      .btn.inactive {
+        background-color: #ddd;
+        color: black;
+      }
+      .form-group {
+        margin-bottom: 10px;
+        text-align: left;
+      }
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .submit-btn {
+        background-color: #4caf50;
+        color: white;
+        padding: 10px;
+        border: none;
+        width: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      .submit-btn:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <script>
+      function toggleSearch(type) {
+        if (type === "location") {
+          document.getElementById("search-location").style.display = "block";
+          document.getElementById("search-features").style.display = "none";
+          document.getElementById("btn-location").classList.add("active");
+          document.getElementById("btn-location").classList.remove("inactive");
+          document.getElementById("btn-features").classList.add("inactive");
+          document.getElementById("btn-features").classList.remove("active");
+        } else {
+          document.getElementById("search-location").style.display = "none";
+          document.getElementById("search-features").style.display = "block";
+          document.getElementById("btn-location").classList.add("inactive");
+          document.getElementById("btn-location").classList.remove("active");
+          document.getElementById("btn-features").classList.add("active");
+          document.getElementById("btn-features").classList.remove("inactive");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Search For Destinations</h1>
+      <div class="btn-group">
+        <button
+          id="btn-location"
+          class="btn active"
+          onclick="toggleSearch('location')"
+        >
+          Search by Location
+        </button>
+        <button
+          id="btn-features"
+          class="btn inactive"
+          onclick="toggleSearch('features')"
+        >
+          Search by Features
+        </button>
+      </div>
+
+      <!-- Search by Location -->
+      <form id="search-location" method="POST">
+        <input type="hidden" name="search_type" value="location" />
+        <div class="form-group">
+          <label for="location">Enter Location:</label>
+          <input type="text" id="location" name="location" required />
+        </div>
+        <button type="submit" class="submit-btn">Search</button>
+      </form>
+
+      <!-- Search by Features -->
+      <form id="search-features" method="POST" style="display: none">
+        <input type="hidden" name="search_type" value="features" />
+        <div class="form-group">
+          <label for="state">State:</label>
+          <input type="text" id="state" name="state" required />
+        </div>
+        <div class="form-group">
+          <label for="city">City:</label>
+          <input type="text" id="city" name="city" required />
+        </div>
+        <div class="form-group">
+          <label for="type">Type of Location:</label>
+          <input type="text" id="type" name="type" required />
+        </div>
+        <div class="form-group">
+          <label for="time_needed">Time Needed (In Hrs):</label>
+          <input
+            type="number"
+            id="time_needed"
+            name="time_needed"
+            step="0.1"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="rating">Min Google Rating:</label>
+          <input
+            type="number"
+            id="rating"
+            name="rating"
+            step="0.1"
+            min="1"
+            max="5"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="best_time">Visiting Time:</label>
+          <select id="best_time" name="best_time">
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Evening">Evening</option>
+            <option value="All">All</option>
+          </select>
+        </div>
+        <button type="submit" class="submit-btn">Search</button>
+      </form>
+
+      {% if error %}
+      <p style="color: red">{{ error }}</p>
+      {% endif %}
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function () {
+          form.reset();
+        });
+      });
+    </script>
+  </body>
+</html>
