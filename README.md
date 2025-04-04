@@ -24,5 +24,5 @@ To run this project locally, make sure you have the following installed:
 ## Screenshots
 
 ![Search By Location Form](sample1.png)
-![Search By Features Form](sample2.jpg)
-![Output View](sample3.jpeg)
+![Search By Features Form](sample2.png)
+![Output View](sample3.png)
