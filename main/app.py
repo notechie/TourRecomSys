@@ -24,7 +24,7 @@ feature_matrix = vectorizer.fit_transform(df['Features'])
 
 cosine_sim = cosine_similarity(feature_matrix)
 
-def recommend_place(place_name, df, cosine_sim, top_n=10):
+def recommend_place_loc(place_name, df, cosine_sim, top_n=10):
     if place_name not in df['Name'].values:
         return pd.DataFrame()
     
@@ -74,7 +74,7 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
 rf_model.fit(X_train, y_train)
 
-def recommend_places(user_input):
+def recommend_place_feat(user_input):
     def safe_encode(value, column):
         if value in label_encoders[column].classes_:
             return label_encoders[column].transform([value])[0]
@@ -139,25 +139,35 @@ def recommend_places(user_input):
 def index():
     if request.method == "POST":
         if request.form.get("location"):
-            location = request.form["location"]
-            recommendations = recommend_place(location, df, cosine_sim)
+            location = request.form["location"].strip()
+            recommendations = recommend_place_loc(location, df, cosine_sim)
+
         else:
-            user_input = {
-                "State": request.form["state"],
-                "City": request.form["city"],
-                "Type": request.form["type"],
-                "time needed to visit in hrs": float(request.form["time_needed"]),
-                "Google review rating": float(request.form["rating"]),
-                "Best Time to visit": request.form["best_time"]
-            }
-            recommendations = recommend_places(user_input)
+            try:
+                user_input = {
+                    "State": request.form.get("state", "").strip(),
+                    "City": request.form.get("city", "").strip(),
+                    "Type": request.form.get("type", "").strip(),
+                    "time needed to visit in hrs": float(request.form.get("time_needed", 0)),
+                    "Google review rating": float(request.form.get("rating", 0)),
+                    "Best Time to visit": request.form.get("best_time", "").strip()
+                }
+                recommendations = recommend_place_feat(user_input)
+
+            except ValueError as ve:
+                return render_template("index.html", error=f"Input error: {ve}")
 
         if recommendations.empty:
             return render_template("index.html", error="No results found. Try different inputs.")
         else:
-            return render_template("results.html", tables=[recommendations.to_html(classes='data', index=False)], titles=recommendations.columns.values)
+            return render_template(
+                "results.html",
+                tables=[recommendations.to_html(classes='data', index=False)],
+                titles=recommendations.columns.values
+            )
 
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
