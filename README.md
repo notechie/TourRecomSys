@@ -9,3 +9,14 @@ This project implements a recommendation system for tour destinations, allowing 
 
 ## Future Scope
 - **Collaborative Filtering:** Implement collaborative filtering based on user history and ratings to enhance recommendations.
+
+## Prerequisites
+To run this project locally, make sure you have the following installed:
+
+- **Python** (version 3.8 or above)
+- **pip** (Python package installer)
+- **Virtual Environment** (recommended for managing dependencies)
+- **Python Libraries**:
+  - flask
+  - pandas
+  - scikit-learn
