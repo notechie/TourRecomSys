@@ -20,3 +20,9 @@ To run this project locally, make sure you have the following installed:
   - flask
   - pandas
   - scikit-learn
+
+## Screenshots
+
+![Search By Location Form](sample1.png)
+![Search By Features Form](sample2.jpg)
+![Output View](sample3.jpeg)
