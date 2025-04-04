@@ -139,15 +139,15 @@ def recommend_place_feat(user_input):
 def index():
     if request.method == "POST":
         if request.form.get("location"):
-            location = request.form["location"].strip()
+            location = request.form["location"].strip().title()
             recommendations = recommend_place_loc(location, df, cosine_sim)
 
         else:
             try:
                 user_input = {
-                    "State": request.form.get("state", "").strip(),
-                    "City": request.form.get("city", "").strip(),
-                    "Type": request.form.get("type", "").strip(),
+                    "State": request.form.get("state", "").strip().title(),
+                    "City": request.form.get("city", "").strip().title(),
+                    "Type": request.form.get("type", "").strip().title(),
                     "time needed to visit in hrs": float(request.form.get("time_needed", 0)),
                     "Google review rating": float(request.form.get("rating", 0)),
                     "Best Time to visit": request.form.get("best_time", "").strip()
